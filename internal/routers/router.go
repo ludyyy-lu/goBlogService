@@ -2,8 +2,8 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	tag "github.com/ludyyy-lu/goBlogService/internal/routers/v1"
-	article "github.com/ludyyy-lu/goBlogService/internal/routers/v1"
+	tag "github.com/ludyyy-lu/goBlogService/internal/routers/api/v1"
+	article "github.com/ludyyy-lu/goBlogService/internal/routers/api/v1"
 )
 
 func NewRouter() *gin.Engine {
