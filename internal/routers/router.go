@@ -2,14 +2,16 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	tag "github.com/ludyyy-lu/goBlogService/internal/routers/api/v1"
-	article "github.com/ludyyy-lu/goBlogService/internal/routers/api/v1"
+	v1 "github.com/ludyyy-lu/goBlogService/internal/routers/api/v1"
 )
 
 func NewRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
+
+	article := v1.NewArticle()
+	tag := v1.NewTag()
 
 	apiv1 := r.Group("/api/v1")
 	{
