@@ -5,11 +5,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/ludyyy-lu/goBlogService/global"
 	"github.com/ludyyy-lu/goBlogService/internal/routers"
 	"github.com/ludyyy-lu/goBlogService/pkg/setting"
 )
-//
+
+// go语言的程序执行顺序：全局变量初始化 -> init方法 -> main方法
 func init() {
 	err := setupSetting()
 	if err != nil {
@@ -17,12 +19,14 @@ func init() {
 	}
 }
 func main() {
+	gin.SetMode(global.ServerSetting.RunMode)
 	router := routers.NewRouter()
+	//设置已经映射好的配置和gin的运行模式
 	s := &http.Server{
-		Addr:           ":8080",
+		Addr:           ":" + global.ServerSetting.HttpPort, //8000
 		Handler:        router,
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
+		ReadTimeout:    global.ServerSetting.ReadTimeout,
+		WriteTimeout:   global.ServerSetting.WriteTimeout,
 		MaxHeaderBytes: 1 << 20,
 	}
 	s.ListenAndServe()
