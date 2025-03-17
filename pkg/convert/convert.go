@@ -8,6 +8,7 @@ func (s StrTo) String() string {
 	return string(s)
 }
 
+//类型转换
 func (s StrTo) Int() (int, error) {
 	v, err := strconv.Atoi(s.String())
 	return v, err

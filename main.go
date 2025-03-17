@@ -14,6 +14,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
+// @termsOfService https://github.com/ludyyy-lu/goBlogService
 // go语言的程序执行顺序：全局变量初始化 -> init方法 -> main方法
 func init() {
 	err := setupSetting()
