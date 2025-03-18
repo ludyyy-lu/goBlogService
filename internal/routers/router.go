@@ -1,9 +1,13 @@
 package routers
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/ludyyy-lu/goBlogService/docs"
+	"github.com/ludyyy-lu/goBlogService/global"
 	"github.com/ludyyy-lu/goBlogService/internal/middleware"
+	"github.com/ludyyy-lu/goBlogService/internal/routers/api"
 	v1 "github.com/ludyyy-lu/goBlogService/internal/routers/api/v1"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
@@ -22,6 +26,10 @@ func NewRouter() *gin.Engine {
 	article := v1.NewArticle()
 	tag := v1.NewTag()
 
+	upload := api.NewUpload()
+	r.POST("/upload/file", upload.UploadFile)
+	//文件服务只有提供静态资源的访问，才能在外部请求本项目HttpServer时同时提供静态资源的访问
+	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 	apiv1 := r.Group("/api/v1")
 	{
 		apiv1.POST("/tags", tag.Create)
