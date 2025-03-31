@@ -22,7 +22,7 @@ func NewRouter() *gin.Engine {
 	// url := ginSwagger.URL("http://127.0.0.0:8000/swagger/doc.json")
 	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
+	r.GET("/auth", api.GetAuth)
 	article := v1.NewArticle()
 	tag := v1.NewTag()
 
@@ -31,6 +31,7 @@ func NewRouter() *gin.Engine {
 	//文件服务只有提供静态资源的访问，才能在外部请求本项目HttpServer时同时提供静态资源的访问
 	r.StaticFS("/static", http.Dir(global.AppSetting.UploadSavePath))
 	apiv1 := r.Group("/api/v1")
+	apiv1.Use(middleware.JWT())
 	{
 		apiv1.POST("/tags", tag.Create)
 		apiv1.DELETE("/tags/:id", tag.Delete)
@@ -45,6 +46,5 @@ func NewRouter() *gin.Engine {
 		apiv1.GET("/articles/:id", article.Get)
 		apiv1.GET("/articles", article.List)
 	}
-
 	return r
 }
