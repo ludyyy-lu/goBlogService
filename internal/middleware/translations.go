@@ -22,13 +22,13 @@ func Translations() gin.HandlerFunc {
 			switch locale {
 			case "zh":
 				_ = zh_translations.RegisterDefaultTranslations(v, trans)
-				break
+				//break
 			case "en":
 				_ = en_translations.RegisterDefaultTranslations(v, trans)
-				break
+				//break
 			default:
 				_ = zh_translations.RegisterDefaultTranslations(v, trans)
-				break
+				//break
 			}
 		}
 	}
